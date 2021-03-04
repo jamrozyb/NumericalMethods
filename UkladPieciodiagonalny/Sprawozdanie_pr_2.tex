@@ -1,0 +1,149 @@
+\documentclass[11pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[polish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\selectlanguage{polish}
+
+\usepackage{Sweave}
+\begin{document}
+\input{Sprawozdanie_pr_2-concordance}
+\title{Metody Numeryczne \\ sprawozdanie projekt nr 2 }
+\author{Bartosz Jamroży, grupa laboratoryjna nr 1}
+\maketitle
+
+
+\section*{Polecenie}
+\begin{center}
+\fbox{\includegraphics{polecenie2.png}}
+\end{center}
+
+
+\newpage
+\section*{Program obliczeniowy}
+Zaimplementowana funkcja obliczająca to 
+\newline [x,det\_A,det\_A\_inverse] = RozwiazanieUkladuPieciodiagonalna(A,b)
+\subsection*{Parametry}
+  \subsubsection*{Wejście}
+    \begin{itemize}
+    \item A Macierz ukladu linowego \\ 
+    Macierz kwadratowa pięciodiagonalna o elementach rzeczywistych 
+    \item b Wyrazy wolne układu\\
+      wektor liczb rzeczywistych
+    \end{itemize}
+  
+  \subsubsection*{Wyjście}
+    \begin{itemize}
+    \item x Rozwiązanie układu \\ 
+    wektor rzeczywisty 
+    \item det \\
+      wyznacznik macierzy A
+    \item det\_inverse \\
+      wyznacznik macierzy odwrotnej do A  
+    \end{itemize}
+
+  \subsection*{Opis działania}
+    Funkcja RozwiazanieUkladuPieciodiagonalna składa się z następujących podfuncji:\\
+    \indent PienciodiagonalnaJakoProstokatna(A) Zwraca macierz, której wiersze są           diagonalami 
+    (odpowiednio rozszerzonymi zerami do długości n rozmiaru A, 
+    diagonala 1 i 2 przedłużone z tyłu, 4 i 5 z przodu) z A
+    Niezerowe elemnty poza diagonalami zostają zignorowane \\
+    \indent EliminacjaGaussa(B,b) Dokonuje operacji na kwadratowym odpowiedniku A           odpowiadającej podstawowej eliminacji gausa
+    na oryginalniej macierzy pięciodiagonalnej. \\
+    \indent Obliczaniex(Be,be) Wyzancza rozwiazanie ukladu  
+
+\newpage
+\section*{Przykłady obliczeniowe}
+
+\subsection*{Normalne działanie, krok po kroku}
+Przykładowa losowa macierz pięciodiagonalna:
+\begin{center}
+\fbox{\includegraphics{A5.png}}
+\end{center}
+
+Oraz wektor wyrazów wolnych:
+\begin{center}
+\fbox{\includegraphics{b_.png}}
+\end{center}
+
+Po przekształceniu do postaci 5xn:
+\begin{center}
+\fbox{\includegraphics{B.png}}
+\end{center}
+
+Po elimancji gaussa:
+\begin{center}
+\fbox{\includegraphics{Be.png}}
+\end{center}
+
+Wyarazy wolne:
+\begin{center}
+\fbox{\includegraphics{be_.png}}
+\end{center}
+
+Teraz zgausowana macierz 5xn jest odpowiednikiem takiej kwadratowej macierzy(tylko dla zobrazowia co sie stało w obliczeniach,program nadal korzysta z formatu 5xn):
+\begin{center}
+\fbox{\includegraphics{Be_5xn.png}}
+\end{center}
+
+Ostateczny wektor rozwiązań:
+\begin{center}
+\fbox{\includegraphics[height=5cm,width=2cm]{x.png}}
+\end{center}
+
+
+
+\subsection*{Zero na diagonali}
+Jako ze funcja realizowana jest poprzez podstawą eliminacje Gaussa nie jest odporna na pojawienie sie zera na diagonali.
+W takim przypadku funcja zwróci wektor NaN-óW.
+
+Macierz powstała z wyboru diagonali z macierzy pascala:
+\begin{center}
+\fbox{\includegraphics{P5.png}}
+\end{center}
+
+Jakiś wektor wyrazów wolnych (bez znaczenia jaki nie on jest tu problemem):
+\begin{center}
+\fbox{\includegraphics{p.png}}
+\end{center}
+
+Wynik:
+\begin{center}
+\fbox{\includegraphics[height=5cm,width=2cm]{xp.png}}
+\end{center}
+
+
+
+\subsection*{Macierz nie pięciodiagonalna}
+Gdy jako maciez podana zostanie macierz nie pięciagonalna, alementy poza diagonalami zostaną zignorowane:
+\begin{center}
+\fbox{\includegraphics{A_A5_b.png}}
+\end{center}
+
+Wywołanie dla obu macierzy da ten sam efekt:\\
+RozwiazanieUkladuPieciodiagonalna(A,b)==RozwiazanieUkladuPieciodiagonalna(A5,b)
+\begin{center}
+\fbox{\includegraphics[height=3cm,width=2cm]{xequalx5.png}}
+\end{center}
+
+\subsection*{Niepoprawne argumenty}
+\begin{center}
+\includegraphics{err1.png}
+\end{center}
+\begin{center}
+\includegraphics{err2.png}
+\end{center}
+
+\section*{Analiza działania programu}
+Wizualizacja błędu rozwiązywania układu dla loosowych macierzy różnych wymiarach. Błąd został wyliczony jako różnica napisanej funkcji do wbudowanej A\ b. Rozbierzności sa niewielki.
+\begin{center}
+\includegraphics{blad.png}
+\end{center}
+Po powiększeniu wykresu widać wartosci liczbowe
+\begin{center}
+\includegraphics{blad_p.png}
+\end{center}
+
+
+\end{document}
